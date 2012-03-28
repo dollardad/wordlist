@@ -1,0 +1,4 @@
+name = Word list
+description = Provides tools for managing site-global word lists data.
+core = 7.x
+package = Experimental

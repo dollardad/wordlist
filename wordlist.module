@@ -1,0 +1,7 @@
+<?php
+
+/**
+ * @file
+ * Provides functions and callbacks for managing a global word list, for
+ * example managing blacklisted words.
+ */
