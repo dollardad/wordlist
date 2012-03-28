@@ -5,3 +5,5 @@ words from comments.
 This is being used as a test module = don't download !!!!
 
 For use with Drupal 7
+
+Thanks
