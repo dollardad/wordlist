@@ -5,3 +5,38 @@
  * Provides functions and callbacks for managing a global word list, for
  * example managing blacklisted words.
  */
+
+/**
+ * Implements hook_menu(). 
+ */
+function wordlist_menu() {
+  $items = array();
+  $items['admin/config/content/wordlist'] = array(
+    'title' => 'Word List',
+    'description' => 'Manage the list of globally available words on your site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('wordlist_page'),
+    'access callback' => 'user_access',
+    'access arguments' => array('adminstrater_site_configuration'),
+    'menu_name' => 'management',
+  );
+  return $items;
+}
+
+/**
+ * Builds the form for configuring the word list. 
+ */
+function wordlist_page() {
+  $form = array();
+  $form['wordlist_form'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Words to include in the list'),
+    '#description' => t('The words included in this list will be available to rules and other modules making use of the global "site" entity.'),
+  );
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+  );
+  
+  return $form;
+}
