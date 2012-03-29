@@ -7,7 +7,7 @@
  */
 
 /**
- * Implements hook_menu(). 
+ * Implements hook_menu().
  */
 function wordlist_menu() {
   $items = array();
@@ -24,19 +24,39 @@ function wordlist_menu() {
 }
 
 /**
- * Builds the form for configuring the word list. 
+ * Builds the form for configuring the word list.
  */
 function wordlist_page() {
   $form = array();
-  $form['wordlist_form'] = array(
+  $form['wordlist_words'] = array(
     '#type' => 'textarea',
     '#title' => t('Words to include in the list'),
     '#description' => t('The words included in this list will be available to rules and other modules making use of the global "site" entity.'),
+    '#default_value' => implode("\r\n", variable_get('wordlist_words', array())),
   );
   $form['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
   );
-  
   return $form;
+}
+
+/**
+ * Submit function for the wordlist form.
+ * @param type $form
+ * @param type $form_state
+ */
+function wordlist_page_submit($form, &$form_state) {
+  $words = explode("\r\n", $form_state['input']['wordlist_words']);
+  wordlist_save_list($words);
+  drupal_set_message(t('The words have been saved'));
+}
+
+/**
+ * Stores globally accessible word list words.
+ *
+ * @param array $words
+ */
+function wordlist_save_list(array $words) {
+  variable_set('wordlist_words', $words);
 }
