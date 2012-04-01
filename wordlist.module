@@ -58,5 +58,18 @@ function wordlist_page_submit($form, &$form_state) {
  * @param array $words
  */
 function wordlist_save_list(array $words) {
+  // Check if the list of words contains any empty strings.
+  $removed = 0;
+  foreach ($words as $key => $word) {
+    if (drupal_strlen($word) == 0) {
+      unset($words[$key]);
+      $removed++;
+    }
+  }
+  // If any strings were removed, notify the user.
+  if ($removed > 0) {
+    drupal_set_message(t('Removed @number empty words', array('@number' => $removed)));
+  }
+  // Store the words in the variables table.
   variable_set('wordlist_words', $words);
 }
